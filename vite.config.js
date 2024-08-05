@@ -5,4 +5,8 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
     plugins: [react()],
     base: "/home/agp/Documents/Programming/self-projects/RealMagic/client/src",
+    server: {
+        port: 3000,
+        host: "0.0.0.0",
+    },
 });
