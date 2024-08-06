@@ -7,7 +7,7 @@ export default function Navigation() {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <nav className="py-8 2xl:px-14">
+        <nav className="py-8 lg:py-5 2xl:px-14">
             <ul className="hidden md:flex flex-row gap-10 justify-between items-center text-xl">
                 <li>
                     <NavLink href="#">Home</NavLink>
@@ -19,7 +19,7 @@ export default function Navigation() {
                     <NavLink href="#">Country</NavLink>
                 </li>
                 <li>
-                    <div className="relative hidden lg:block">
+                    <div className="relative hidden xl:block">
                         <input
                             type="text"
                             className="rounded-3xl placeholder:text-[rgb(98, 98, 98)] px-5 py-2 text-black text-2xl border-none outline-none"
@@ -97,7 +97,7 @@ export default function Navigation() {
                     </li>
                 </ul>
             </div>
-            <div className="relative mt-10 w-full lg:hidden">
+            <div className="relative mt-10 w-full xl:hidden">
                 <input
                     type="text"
                     className="rounded-3xl placeholder:text-[rgb(98, 98, 98)] px-5 py-2 text-black text-2xl border-none outline-none w-full"

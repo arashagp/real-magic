@@ -1,17 +1,40 @@
 import { MdAccessTime } from "react-icons/md";
 import { IoIosPlayCircle } from "react-icons/io";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-export default function IntroHeader() {
+export default function IntroHeader({ movie }) {
+    const [genre, setGenre] = useState([]);
+
+    async function getGenre() {
+        try {
+            const { data } = await axios.get(
+                "https://api.themoviedb.org/3/genre/movie/list?api_key=c8a076e45d95fbffd3277b218d34f911",
+            );
+            setGenre(
+                movie.genre_ids.map((id) =>
+                    data.genres.find((genre) => genre.id === id),
+                ),
+            );
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        getGenre();
+    }, []);
+
     return (
         <>
             <img
-                src="/headerBackground.png"
+                src={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`}
                 alt=""
                 width={"100%"}
                 className="relative z-0"
             />
-            <div className="absolute container bottom-0 mx-auto w-full h-[50%] flex flex-col justify-between items-start">
-                <div className="flex flex-row gap-10">
+            <div className="absolute container bottom-0 pl-5 gap-10 lg:pl-32 pb-12 lg:gap-40 xl:pl-64 xl:pb-20 mx-auto w-full xl:gap-60 flex flex-col justify-between items-start">
+                <div className="flex flex-row gap-10 self-center">
                     <button className="text-white bg-[#FF0000] px-5 py-2 flex items-center justify-center gap-2 rounded text-3xl">
                         Watch Now
                         <IoIosPlayCircle className="text-4xl" />
@@ -23,25 +46,19 @@ export default function IntroHeader() {
                 </div>
                 <div className="hidden md:block">
                     <h1 className="text-4xl font-bold">
-                        Avatar: The Way of Water
+                        {movie.original_title}
                     </h1>
                     <div className="flex flex-row gap-10 items-center">
                         <div className="flex flex-row gap-5">
-                            <button>Action</button>
-                            <button>Adventure</button>
-                            <button>Science Fiction</button>
+                            {genre.map((genre) => (
+                                <button key={genre.id}>{genre.name}</button>
+                            ))}
                         </div>
-                        <div>2022 </div>
+                        <div>{movie.release_date.substring(0, 4)}</div>
                         <div>3:12:00</div>
-                        <div>8.5</div>
+                        <div>{movie.vote_average}</div>
                     </div>
-                    <p className="text-xl w-[50%]">
-                        Set more than a decade after the events of the first
-                        film, learn the story of the Sully family (Jake,
-                        Neytiri, and their kids), the trouble that follows them,
-                        the lengths they go to keep each other safe, the battles
-                        they fight to stay alive, and the tragedies they endure.
-                    </p>
+                    <p className="lg:text-xl w-[50%]">{movie.overview}</p>
                 </div>
             </div>
         </>
